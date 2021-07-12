@@ -1,3 +1,32 @@
 body {
-    color: green;
+    color: black;
+    font-size: 18px;
+
+}
+header {
+    background-color: rgb(102, 100, 100);
+    font-size: 40px;
+    text-align: center;
+    padding: 10px;
+}
+
+#searchDiv {
+    background-color: rgb(231, 229, 229);
+    padding: 5%;
+    text-align: center;
+}
+
+
+#cardContainer {
+    background-color: rgb(231, 229, 229);
+    text-align: center;
+}
+
+#detailsContainer {
+    background-color: rgb(231, 229, 229);
+    text-align: center;
+}
+
+#contentContainer {
+    background-color:white;
 }
