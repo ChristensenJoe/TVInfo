@@ -13,6 +13,7 @@ function onStart() {
 
 
 function renderSearchCard(searchData) {
+    document.querySelector("#cardContainer").style.height = "100%";
     const cardList = document.querySelector("#cardList");
     let card = document.createElement("li");
 
