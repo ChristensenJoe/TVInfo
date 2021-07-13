@@ -92,36 +92,47 @@ function renderCastCard(castMember){
     let card = document.createElement('div')
     card.className = "card"
     card.style.width = "250px"
-   card.style.marginLeft = "5px";
-   card.style.marginRight = "5px";
+    card.style.marginLeft = "5px";
+    card.style.marginRight = "5px";
     card.style.flex = "0 0 auto"
 
     let img =  document.createElement('img')
     img.src = castMember.person.image.original
-    img.className ="card-img-top"
+    img.className ="card-img-top rounded-circle"
     img.style.width = "200px"
     img.style.height = "200px"
     img.style.objectFit = "cover"
     img.style.margin = "auto"
     img.style.paddingTop = "3px"
-
-    
+    img.style.marginTop = "10px";
     img.alt = "cast-picture"
+
+    let span = document.createElement("span");
+    span.style.marginTop = "20px";
+    span.className = "border-bottom border-3";
 
     let cardBody = document.createElement('div')
     cardBody.className = "card-body"
 
-    let h5 = document.createElement('h5')
-    h5.className = 'card-title'
-    h5.textContent = castMember.person.name
+    let h4 = document.createElement('h4')
+    h4.className = 'card-title'
+    h4.style.font = "bold";
+    h4.textContent = castMember.person.name
+
+    let pAs = document.createElement('p')
+    pAs.className = 'card-text'
+    pAs.style.fontSize = "15px";
+    pAs.textContent = "as"
+    pAs.style.marginTop = "15px";
 
     let pChar = document.createElement('p')
     pChar.className = 'card-text'
     pChar.textContent = castMember.character.name
+    pChar.style.fontSize = "19px";
 
-    cardBody.append(h5, pChar)
+    cardBody.append(h4, pAs, pChar)
 
-    card.append(img, cardBody)
+    card.append(img, span, cardBody)
 
     document.querySelector('#castContainer').append(card)
 }
