@@ -36,13 +36,13 @@ header {
    /* display: block;*/
     padding: 1%;
     border-radius: .25rem;
-    display: none;
+    display: block;
 }
 
 #detailsContainer {
     background-color: rgb(231, 229, 229);
     text-align: center;
-    display: block;
+    display: none;
     border-radius: .25rem;
 }
 

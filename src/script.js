@@ -81,7 +81,7 @@ function renderSearchCard(searchData) {
 
     card.append(div1);
   
-
+    card.addEventListener("click", function(){renderDetailsListener(searchData.id)});
 
     cardList.append(card);
 }
@@ -93,18 +93,87 @@ function renderSearchCard(searchData) {
 /**
  * Event Listener for the Search Form
  */
+
+function renderDetailsListener(showID) {
+    document.querySelector("#cardContainer").style.display = "none";
+    document.querySelector("#detailsContainer").style.display = "block";
+
+    fetchShowByID(showID)
+    .then(json => {
+        let image = document.querySelector("#detailsImageFile");
+        if(json.image !== null) {
+            image.src = json.image.original;
+        }
+        else {
+            image.src = "../images/placeholder.png";
+        }
+
+        if(json.name !== null) {
+        document.querySelector("#detailsTitle").textContent = json.name;
+        }
+        else {
+            document.querySelector("#detailsTitle").textContent = "Title Not Available";
+        }
+
+        if(json.summary !== null && json.summary.length >= 1) {
+            let testElement = document.createElement("div");
+            testElement.innerHTML = json.summary;
+            document.querySelector("#detailsP").textContent = testElement.innerText;
+
+        }
+        else {
+            document.querySelector("#detailsP").textContent = "Summary not available";
+        }
+
+        if(json["_embedded"].episodes.length > 1) {
+        document.querySelector("#episodes").textContent = `Episodes: ${json["_embedded"].episodes.length}`;
+        }
+        else {
+            document.querySelector("#episodes").textContent = "Episodes Information Unavailable"
+        }
+
+        if(json.runtime !== null) {
+            document.querySelector("#runTime").textContent = `Runtime: ${json.runtime} minutes`;
+        }
+        else {
+            document.querySelector("#runTime").textContent = "Runtime Information Unavailable";
+        }
+
+        if(json.genres !== null && json.genres.length >= 1) {
+        document.querySelector("#genre").textContent = `Genres: ${json.genres.join(", ")}`;
+        console.log(json.genres.length);
+        }
+        else {
+            document.querySelector("#genre").textContent = "Genre Information Unavailable";
+        }
+
+        if(json["_embedded"].episodes.length > 1) {
+            document.querySelector("#years").textContent = `${json["_embedded"].episodes[0].airdate.slice(0, 4)} - ${json["_embedded"].episodes[json["_embedded"].episodes.length-1].airdate.slice(0, 4)}`;
+        }
+        else {
+            document.querySelector("#years").textContent = "Year Information Unavailable"
+        }
+
+    });
+}
+
 function searchFormListener() {
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
         event.preventDefault();
         fetchSearchData(event.target.showSearch.value.split(" ").join("+"))
         .then(json => {
             document.querySelector("#cardList").innerHTML = "";
+            document.querySelector("#cardContainer").style.display = "block";
+            document.querySelector("#detailsContainer").style.display = "none";
             json.forEach((element) => {
                 renderSearchCard(element.show);
             })
         });
     })
 }
+
+
+//Helper Functions
 
 
 //Data Fetches
@@ -117,4 +186,8 @@ function searchFormListener() {
  */
  function fetchSearchData(searchInput) {
     return fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`).then(res => res.json());
+}
+
+function fetchShowByID(id) {
+    return fetch(`https://api.tvmaze.com/shows/${id}?embed[]=cast&embed[]=episodes`).then(res => res.json());
 }
