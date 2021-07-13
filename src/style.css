@@ -109,7 +109,7 @@ ul {
 
 #castContainer {
    /* height: 40%; */
-   
+    text-align: center;
     border-color: black;
     border-width: 1px;
     border-style:solid;
@@ -117,11 +117,16 @@ ul {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 5px;
-   /* overflow: auto;
-    white-space: nowrap; */
-    /*overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    display: inline-block; */
+}
 
+#commentFormContainer{
+    border-color: black;
+    border-width: 1px;
+    border-style:solid;
+    padding-top: 15px;
+}
+
+#commentForm{
+    margin-top: auto;
+    margin-bottom: auto;
 }

@@ -205,7 +205,9 @@ function renderDetailsListener(showID) {
 
 
         if (json["_embedded"].cast !== null && json["_embedded"].cast.length >= 1){
+            document.querySelector("#castContainer").innerHTML =''
             json["_embedded"].cast.forEach((member) => renderCastCard(member))
+
         } else {
             document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
         }

@@ -83,7 +83,35 @@
         </div>
         <div class="row">
           <div class="col" id="detailsCommentsBox">
-            <p>comments box</p>
+            <div id="commentBox">
+            </div>
+            <div id="commentFormContainer">
+             <form id="commentForm">
+      
+              <div class="mb-3 row">
+                <label for="inputComment" class="col-sm-2 col-form-label">Comment</label>
+                <div class="col-sm-10">
+                  <textarea type="text" class="form-control" id="inputComment" row="3"></textarea>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="author" class="col-sm-2 col-form-label">Author</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="commentAuthor">
+                
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
+                </div>
+
+        
+              </div>
+
+
+              </form>
+
+            </div>
           </div>
         
         </div>
