@@ -130,3 +130,9 @@ ul {
     margin-top: auto;
     margin-bottom: auto;
 }
+
+#rating {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

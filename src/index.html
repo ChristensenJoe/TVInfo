@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>TV Info</title>
+    <link rel="icon" href="../images/placeholder.png">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script defer src="script.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open Sans"/>
 
 </head>
 <body>
-    <header class="jumbotron text-center">
+    <header id="websiteHeader" class="jumbotron text-center">
         TV Info
     </header>
     
@@ -84,6 +87,9 @@
         <div class="row">
           <div class="col" id="detailsCommentsBox">
             <div id="commentBox">
+              <ul id="commentList">
+
+              </ul>
             </div>
             <div id="commentFormContainer">
              <form id="commentForm">
@@ -105,11 +111,28 @@
                   <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
                 </div>
 
+                <div class="col-auto">
+                  <div id="rating">
+                    <span id="star1" class="bi bi-star"></span>
+                    <span id="star2" class="bi bi-star"></span>
+                    <span id="star3" class="bi bi-star"></span>
+                    <span id="star4" class="bi bi-star"></span>
+                    <span id="star5" class="bi bi-star"></span>
+                  </div>
+                </div>
+
         
               </div>
 
 
-              </form>
+            </form>
+
+            <template>
+              <div>
+                <b-form-rating v-model="value"></b-form-rating>
+                <p class="mt-2">Value: {{ value }}</p>
+              </div>
+            </template>
 
             </div>
           </div>

@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", onStart);
 
 function onStart() {
     searchFormListener();
+    commentFormListener();
+    headerListener();
+    ratingListener();
 }
 
 //Get search value
@@ -137,6 +140,77 @@ function renderCastCard(castMember){
     document.querySelector('#castContainer').append(card)
 }
 
+function renderComment(comment) {
+    let li = document.createElement("li");
+
+
+    let cardDiv = document.createElement("div");
+    cardDiv.className = "card";
+    cardDiv.style.width = "80%";
+    cardDiv.style.marginRight = "auto";
+    cardDiv.style.marginLeft = "auto";
+    cardDiv.style.marginTop = "10px";
+    cardDiv.style.marginBottom = "10px";
+    let cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+
+    let figure = document.createElement("figure");
+    figure.className = "text-start";
+
+    let blockquote = document.createElement("blockquote");
+    blockquote.className = "blockquote";
+
+    let commentP = document.createElement("p");
+    commentP.textContent = comment.content;
+
+    blockquote.append(commentP);
+
+    let figCaption = document.createElement("figcaption");
+    figCaption.className = "blockquote-footer";
+    figCaption.textContent = comment.author;
+
+    figure.append(blockquote, figCaption);
+
+    cardBody.append(renderRating(comment), figure);
+    cardDiv.append(cardBody);
+    li.append(cardDiv);
+    document.querySelector("#commentList").append(li);
+}
+
+function renderRating(comment) {
+    let count = 1;
+    let rating = document.createElement("div");
+
+    let star1 = document.createElement("span");
+    star1.className = "bi bi-star";
+    star1.style.padding = "2px";
+    let star2 = document.createElement("span");
+    star2.className = "bi bi-star";
+    star2.style.padding = "2px";
+    let star3 = document.createElement("span");
+    star3.className = "bi bi-star";
+    star3.style.padding = "2px";
+    let star4 = document.createElement("span");
+    star4.className = "bi bi-star";
+    star4.style.padding = "2px";
+    let star5 = document.createElement("span");
+    star5.className = "bi bi-star";
+    star5.style.padding = "2px";
+
+    rating.append(star1, star2, star3, star4, star5);
+
+    let starContainer = Array.prototype.slice.call(rating.children);
+    
+    starContainer.forEach((element) => {
+        if(count <= comment.rating) {
+            element.className = "bi bi-star-fill";
+            count++;
+        }
+    });
+
+    return rating;
+
+}
 //Event Listeners
 
 
@@ -221,6 +295,7 @@ function searchFormListener() {
         fetchSearchData(event.target.showSearch.value.split(" ").join("+"))
         .then(json => {
             document.querySelector("#cardList").innerHTML = "";
+            document.querySelector("#commentList").innerHTML = "";
             document.querySelector("#cardContainer").style.display = "block";
             document.querySelector("#detailsContainer").style.display = "none";
             json.forEach((element) => {
@@ -230,9 +305,80 @@ function searchFormListener() {
     })
 }
 
+function commentFormListener() {
+    document.querySelector("#commentForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        renderComment({
+            content: event.target.inputComment.value,
+            author: event.target.commentAuthor.value,
+            rating: rating()
+        });
+
+        document.querySelector("#commentForm").reset();
+    })
+}
+
+function ratingListener() {
+    let starContainer = Array.prototype.slice.call(document.querySelector("#rating").children);
+    document.querySelector("#star1").addEventListener("click", () => {
+        clearStars();
+        starContainer[0].className = "bi bi-star-fill";
+    });
+    document.querySelector("#star2").addEventListener("click", () => {
+        clearStars();
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+    });
+    document.querySelector("#star3").addEventListener("click", () => {
+        clearStars();
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+    });
+    document.querySelector("#star4").addEventListener("click", () => {
+        clearStars();
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-fill";
+    });
+    document.querySelector("#star5").addEventListener("click", () => {
+        clearStars();
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-fill";
+        starContainer[4].className = "bi bi-star-fill";
+    });
+}
+
+function headerListener() {
+    document.querySelector("#websiteHeader").addEventListener("click", () => {
+        location.reload();
+    })
+}
 
 //Helper Functions
 
+function clearStars() {
+    let starContainer = Array.prototype.slice.call(document.querySelector("#rating").children);
+    starContainer.forEach((star) => {
+        star.className = "bi bi-star";
+    })
+}
+
+function rating() {
+    let starContainer = Array.prototype.slice.call(document.querySelector("#rating").children);
+    let count = 0;
+    starContainer.forEach((element) => {
+        if(element.className === "bi bi-star-fill") {
+            count++;
+        }
+    });
+
+    return count;
+}
 
 //Data Fetches
 
