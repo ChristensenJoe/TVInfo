@@ -16,10 +16,13 @@ function renderSearchCard(searchData) {
     document.querySelector("#cardContainer").style.height = "100%";
     const cardList = document.querySelector("#cardList");
     let card = document.createElement("li");
+    card.style.margin = "auto";
 
     let div1 = document.createElement("div");
     div1.className = "card mb-3";
-    div1.style.maxWidth = "540px";
+    div1.style.maxWidth = "600px";
+    div1.style.margin = 'auto';
+
 
     let div2 = document.createElement("div");
     div2.className = "row g-0";
