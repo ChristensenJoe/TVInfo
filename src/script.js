@@ -13,6 +13,7 @@ function onStart() {
 
 
 function renderSearchCard(searchData) {
+
     document.querySelector("#cardContainer").style.height = "100%";
     const cardList = document.querySelector("#cardList");
     let card = document.createElement("li");
@@ -87,6 +88,44 @@ function renderSearchCard(searchData) {
 }
 
 
+function renderCastCard(castMember){
+    let card = document.createElement('div')
+    card.className = "card"
+    card.style.width = "250px"
+   card.style.marginLeft = "5px";
+   card.style.marginRight = "5px";
+    card.style.flex = "0 0 auto"
+
+    let img =  document.createElement('img')
+    img.src = castMember.person.image.original
+    img.className ="card-img-top"
+    img.style.width = "200px"
+    img.style.height = "200px"
+    img.style.objectFit = "cover"
+    img.style.margin = "auto"
+    img.style.paddingTop = "3px"
+
+    
+    img.alt = "cast-picture"
+
+    let cardBody = document.createElement('div')
+    cardBody.className = "card-body"
+
+    let h5 = document.createElement('h5')
+    h5.className = 'card-title'
+    h5.textContent = castMember.person.name
+
+    let pChar = document.createElement('p')
+    pChar.className = 'card-text'
+    pChar.textContent = castMember.character.name
+
+    cardBody.append(h5, pChar)
+
+    card.append(img, cardBody)
+
+    document.querySelector('#castContainer').append(card)
+}
+
 //Event Listeners
 
 
@@ -141,7 +180,6 @@ function renderDetailsListener(showID) {
 
         if(json.genres !== null && json.genres.length >= 1) {
         document.querySelector("#genre").textContent = `Genres: ${json.genres.join(", ")}`;
-        console.log(json.genres.length);
         }
         else {
             document.querySelector("#genre").textContent = "Genre Information Unavailable";
@@ -152,6 +190,13 @@ function renderDetailsListener(showID) {
         }
         else {
             document.querySelector("#years").textContent = "Year Information Unavailable"
+        }
+
+
+        if (json["_embedded"].cast !== null && json["_embedded"].cast.length >= 1){
+            json["_embedded"].cast.forEach((member) => renderCastCard(member))
+        } else {
+            document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
         }
 
     });

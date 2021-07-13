@@ -70,7 +70,7 @@ ul {
 }
 
 #detailsRelatedInfo{
-    height: 200px;
+   /* height: 200px; */
 }
 
 #ratingRow {
@@ -99,7 +99,7 @@ ul {
 }
 
 #relatedInfoContainer{
-    height: 60%;
+    /* height: 60%; */
     font-size: 14px;
     border-color: black;
     border-width: 1px;
@@ -108,8 +108,20 @@ ul {
 }
 
 #castContainer {
-    height: 40%;
+   /* height: 40%; */
+   
     border-color: black;
     border-width: 1px;
     border-style:solid;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 5px;
+   /* overflow: auto;
+    white-space: nowrap; */
+    /*overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: inline-block; */
+
 }
