@@ -33,15 +33,16 @@ header {
     background-color: rgb(231, 229, 229);
     text-align: center;
     height: 1000px;
-    display: block;
+   /* display: block;*/
     padding: 1%;
     border-radius: .25rem;
+    display: none;
 }
 
 #detailsContainer {
     background-color: rgb(231, 229, 229);
     text-align: center;
-    display: none;
+    display: block;
     border-radius: .25rem;
 }
 
@@ -60,4 +61,55 @@ ul {
 
 #cardWrapper {
     text-align: center;
+}
+
+#detailsRelatedInfo, #detailsCommentsBox, #detailsImage, #detailsDescription, #ratingRow, #descriptionRow {
+    border-color: black;
+    border-width: 1px;
+    border-style:solid;
+}
+
+#detailsRelatedInfo{
+    height: 200px;
+}
+
+#ratingRow {
+    height: 20%;
+}
+
+#descriptionRow {
+    height: 80%;
+}
+
+#ratingPlaceholder {
+    text-align: right;
+    margin-top:auto;
+    margin-bottom: auto;
+}
+
+#detailsP {
+    text-align: left;
+    margin-top: 0;
+}
+
+#summaryHeader {
+    text-align: left;
+    margin-bottom: 0
+
+}
+
+#relatedInfoContainer{
+    height: 60%;
+    font-size: 14px;
+    border-color: black;
+    border-width: 1px;
+    border-style:solid;
+
+}
+
+#castContainer {
+    height: 40%;
+    border-color: black;
+    border-width: 1px;
+    border-style:solid;
 }
