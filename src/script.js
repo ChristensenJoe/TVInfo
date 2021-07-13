@@ -110,7 +110,6 @@ function searchFormListener() {
     fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`)
     .then(res => res.json())
     .then(json => {
-        
         document.querySelector("#cardList").innerHTML = "";
         json.forEach((element) => {
             console.log(element.show);
