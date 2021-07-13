@@ -96,7 +96,13 @@ function renderSearchCard(searchData) {
 function searchFormListener() {
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
         event.preventDefault();
-        fetchSearchData(event.target.showSearch.value.split(" ").join("+"));
+        fetchSearchData(event.target.showSearch.value.split(" ").join("+"))
+        .then(json => {
+            document.querySelector("#cardList").innerHTML = "";
+            json.forEach((element) => {
+                renderSearchCard(element.show);
+            })
+        });
     })
 }
 
@@ -110,13 +116,5 @@ function searchFormListener() {
  * 
  */
  function fetchSearchData(searchInput) {
-    fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`)
-    .then(res => res.json())
-    .then(json => {
-        document.querySelector("#cardList").innerHTML = "";
-        json.forEach((element) => {
-            console.log(element.show);
-            renderSearchCard(element.show);
-        });
-    });
+    return fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`).then(res => res.json());
 }
