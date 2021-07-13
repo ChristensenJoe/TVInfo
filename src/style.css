@@ -2,17 +2,19 @@ body {
     color: black;
     font-size: 18px;
     text-align: center;
+    font-family: 'Open Sans';
 
 }
 header {
     background-color: rgb(102, 100, 100);
-    font-size: 40px;
+    font-size: 50px;
     text-align: center;
     padding: 10px;
+    color: white;
 }
 
 #searchDiv {
-    background-color: rgb(231, 229, 229);
+   /* background-color: rgb(231, 229, 229);*/
     padding: 1%;
     text-align: center;
 
@@ -22,19 +24,25 @@ header {
     width: 300px;
 }
 
+#searchForm .row.justify-content-center {
+  margin-top: 20px;
+}
+
 
 #cardContainer {
-    background-color: rgb(197, 192, 192);
+    background-color: rgb(231, 229, 229);
     text-align: center;
     height: 1000px;
     display: block;
     padding: 1%;
+    border-radius: .25rem;
 }
 
 #detailsContainer {
     background-color: rgb(231, 229, 229);
     text-align: center;
-    display: none
+    display: none;
+    border-radius: .25rem;
 }
 
 #contentContainer {
