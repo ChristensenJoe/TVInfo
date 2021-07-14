@@ -176,7 +176,12 @@ function renderCastCard(castMember) {
     card.style.flex = "0 0 auto"
 
     let img = document.createElement('img')
-    img.src = castMember.person.image.original
+    if(castMember.person.image !== null) {
+        img.src = castMember.person.image.original
+    }
+    else {
+        img.src = "../images/placeholder.png";
+    }
     img.className = "card-img-top rounded-circle"
     img.style.width = "200px"
     img.style.height = "200px"
@@ -216,6 +221,10 @@ function renderCastCard(castMember) {
 
     card.append(img, span, cardBody)
 
+    card.addEventListener("click", () => {
+        renderActorDetailsListener(castMember.person.id);
+    });
+
     document.querySelector('#castContainer').append(card)
 }
 
@@ -231,7 +240,7 @@ function renderShowCard(show) {
         img.src = show.image.original;
     }
     else {
-        img.src = "../images/placeholder";
+        img.src = "../images/placeholder.png";
     }
     img.className = "card-img-top rounded-circle"
     img.style.width = "200px"
@@ -260,7 +269,7 @@ function renderShowCard(show) {
     let pAs = document.createElement('p')
     pAs.className = 'card-text'
     pAs.style.fontSize = "14px";
-    if(show.genres !== null) {
+    if(show.genres.length >= 1) {
     pAs.textContent = `Genre: ${show.genres.join(", ")}`;
     }
     else {
@@ -281,6 +290,10 @@ function renderShowCard(show) {
     cardBody.append(h4, pAs, pChar)
 
     card.append(img, span, cardBody)
+
+    card.addEventListener("click", () => {
+        renderDetailsListener(show.id);
+    })
 
     document.querySelector('#castingCreditsContainer').append(card)
 }
@@ -448,6 +461,7 @@ function renderTopStars(rating) {
 function renderDetailsListener(showID) {
     document.querySelector("#cardContainer").style.display = "none";
     document.querySelector("#detailsContainer").style.display = "block";
+    document.querySelector("#actorDetailContainer").style.display = "none";
     currentShow = showID;
     fetchShowByID(showID)
         .then(json => {
@@ -534,6 +548,7 @@ function renderDetailsListener(showID) {
 function renderActorDetailsListener(personID) {
     document.querySelector("#cardContainer").style.display = "none";
     document.querySelector("#actorDetailContainer").style.display = "block";
+    document.querySelector("#detailsContainer").style.display = "none";
     fetchPersonByID(personID)
         .then(person => {
             let actorName = document.querySelector('#actorNameHeader')
@@ -551,7 +566,17 @@ function renderActorDetailsListener(personID) {
     fetchCastingCreditsByPersonID(personID)
         .then(shows => {
             document.querySelector("#castingCreditsContainer").innerHTML = ''
+            if(shows.length >= 1) {
             shows.forEach((show) => renderShowCard(show["_embedded"].show))
+            }
+            else {
+                let p = document.createElement("p");
+                p.textContent = "Casting Credits Information Unavailable";
+                p.style.textAlign = "center";
+                p.style.margin = "auto";
+
+                document.querySelector("#castingCreditsContainer").append(p);
+            }
         });
 
 }
