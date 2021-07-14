@@ -23,13 +23,13 @@ function renderSearchCard(searchData) {
     card.style.margin = "auto";
 
     let div1 = document.createElement("div");
-    div1.className = "card mb-3";
+    div1.className = "card mb-3 border-0";
     div1.style.maxWidth = "600px";
     div1.style.margin = 'auto';
 
 
     let div2 = document.createElement("div");
-    div2.className = "row g-0";
+    div2.className = "row g-0 border-0";
 
     let div3 = document.createElement("div");
     div3.className = "col-md-4";
@@ -72,7 +72,7 @@ function renderSearchCard(searchData) {
     runtime.textContent = `Runtime: ${searchData.runtime} minutes`
 
     let status = document.createElement("li");
-    status.textContent = searchData.status;
+    status.textContent = `Status: ${searchData.status}`;
 
     infoList.append(language, genre, runtime, status);
 

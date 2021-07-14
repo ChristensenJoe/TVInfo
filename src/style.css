@@ -2,11 +2,12 @@ body {
     color: black;
     font-size: 18px;
     text-align: center;
-    font-family: 'Open Sans';
+    background-color: white
 
 }
 header {
-    background-color: rgb(102, 100, 100);
+    background-color:#30343F;
+    /*rgb(102, 100, 100);*/
     font-size: 50px;
     text-align: center;
     padding: 10px;
@@ -30,7 +31,8 @@ header {
 
 
 #cardContainer {
-    background-color: rgb(231, 229, 229);
+    background-color:  #FAFAFF;
+    /*rgb(231, 229, 229);*/
     text-align: center;
     height: 1000px;
    /* display: block;*/
@@ -39,9 +41,14 @@ header {
     display: block;
 }
 
+.card.mb-3.border-0:hover{
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+}
+
 #detailsContainer {
-    background-color: rgb(231, 229, 229);
-    text-align: center;
+    background-color: #FAFAFF;
     display: none;
     border-radius: .25rem;
 }
@@ -63,22 +70,37 @@ ul {
     text-align: center;
 }
 
-#detailsRelatedInfo, #detailsCommentsBox, #detailsImage, #detailsDescription, #ratingRow, #descriptionRow {
+/* #detailsRelatedInfo, #detailsCommentsBox, #detailsImage, #detailsDescription, #ratingRow, #descriptionRow {
     border-color: black;
     border-width: 1px;
     border-style:solid;
-}
+} */
 
-#detailsRelatedInfo{
-   /* height: 200px; */
+/*#detailsContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+*/
+
+#detailsImageFile {
+    max-width: 300px;
+    margin: auto;
 }
 
 #ratingRow {
-    height: 20%;
+    height: 10%;
+    padding-right: 10px;
 }
 
 #descriptionRow {
-    height: 80%;
+    height: 70%;
+    padding: 0;
+    margin: 0;
+    
+}
+#relatedInfoContainer{
+    height: 20%;
+    text-align: left;
 }
 
 #ratingPlaceholder {
@@ -87,32 +109,47 @@ ul {
     margin-bottom: auto;
 }
 
+#detailsTitle {
+    padding-top: 10px;
+}
+
 #detailsP {
     text-align: left;
     margin-top: 0;
+    padding-top:0;
+    height: 80%;
+    overflow: scroll;
+
 }
 
 #summaryHeader {
     text-align: left;
-    margin-bottom: 0
-
+    margin-bottom: 0;
+    padding-bottom:0;
+   
+    height: 10%;
 }
 
 #relatedInfoContainer{
     /* height: 60%; */
-    font-size: 14px;
-    border-color: black;
-    border-width: 1px;
-    border-style:solid;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
+
+}
+
+#castHeader {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    
 }
 
 #castContainer {
    /* height: 40%; */
     text-align: center;
-    border-color: black;
-    border-width: 1px;
-    border-style:solid;
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -120,9 +157,6 @@ ul {
 }
 
 #commentFormContainer{
-    border-color: black;
-    border-width: 1px;
-    border-style:solid;
     padding-top: 15px;
 }
 
@@ -135,4 +169,10 @@ ul {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+#detailsCommentsBox {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
