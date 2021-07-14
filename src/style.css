@@ -186,3 +186,18 @@ ul {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+#actorDetailsImage {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#actorDetailsImageFile{
+    height: 300px;
+}
+
+
+#actorDetailContainer {
+    background-color: #FAFAFF;
+    border-radius: .25rem;
+}
