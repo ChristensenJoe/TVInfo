@@ -99,11 +99,9 @@ ul {
     height: 70%;
     padding: 0;
     margin: 0;
-    overflow-y: scroll;
-    scrollbar-width: none;
 }
 
-#descriptionRow::-webkit-scrollbar {
+#detailsP::-webkit-scrollbar {
     display: none;
 }
 
@@ -138,6 +136,8 @@ ul {
     padding-top:0;
     height: 90%;
     overflow-wrap: break-word;
+    overflow-y: scroll;
+    scrollbar-width: none;
 
 }
 
