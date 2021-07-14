@@ -92,6 +92,81 @@ function renderSearchCard(searchData) {
     cardList.append(card);
 }
 
+function renderActorSearchCard(searchData) {
+
+    document.querySelector("#cardContainer").style.height = "100%";
+    const cardList = document.querySelector("#cardList");
+    let card = document.createElement("li");
+    card.style.margin = "auto";
+
+    let div1 = document.createElement("div");
+    div1.className = "card mb-3 border-0";
+    div1.style.maxWidth = "600px";
+    div1.style.margin = 'auto';
+
+
+    let div2 = document.createElement("div");
+    div2.className = "row g-0 border-0";
+
+    let div3 = document.createElement("div");
+    div3.className = "col-md-4";
+
+    let image = document.createElement("img");
+    image.className = "img-fluid rounded-start";
+    image.alt = "searchCardImage";
+    if (searchData.image !== null) {
+        image.src = searchData.image.original;
+    }
+    else {
+        image.src = "../images/placeholder.png";
+    }
+
+    div3.appendChild(image);
+
+    let div4 = document.createElement("div");
+    div4.className = "col-md-8";
+
+    let div5 = document.createElement("div");
+    div5.className = "card-body";
+
+    let title = document.createElement("h3");
+    title.className = "card-title";
+    title.textContent = searchData.name;
+
+    let info = document.createElement("p");
+    info.className = "card-text";
+
+    let infoList = document.createElement("ul");
+    infoList.id = "infoList";
+
+    let language = document.createElement("li");
+    language.textContent = '';
+
+    let genre = document.createElement("li");
+    genre.textContent = '';
+
+    let runtime = document.createElement("li");
+    runtime.textContent = ''
+
+    let status = document.createElement("li");
+    status.textContent = '';
+
+    infoList.append(language, genre, runtime, status);
+
+    info.append(infoList);
+
+    div5.append(title, info);
+    div4.append(div5);
+    div2.append(div3, div4);
+    div1.append(div2);
+
+    card.append(div1);
+
+    card.addEventListener("click", function () { renderActorDetailsListener(searchData.id) });
+
+    cardList.append(card);
+}
+
 
 function renderCastCard(castMember) {
     let card = document.createElement('div')
@@ -294,6 +369,7 @@ function renderTopStars(rating) {
         document.querySelector("#overallRating").prepend(errorMessage);
     }
 }
+
 //Event Listeners
 
 
@@ -387,17 +463,51 @@ function renderDetailsListener(showID) {
         });
 }
 
+function renderActorDetailsListener(personID){
+    document.querySelector("#cardContainer").style.display = "none";
+    document.querySelector("#actorDetailContainer").style.display = "block";
+    fetchPersonByID(personID)
+    .then(person => {
+        let actorName = document.querySelector('#actorNameHeader')
+        actorName.textContent = person.name
+
+        let actorImg = document.querySelector('#actorDetailsImageFile')
+        if (person.image !== null){
+            actorImg.src = person.image.original
+        } else {
+            actorImg.src = '../images/placeholder.png'
+        }
+
+    })
+
+    // fetchCastingCreditsByPersonID(personID)
+    // .then(credits => credits.forEach)
+
+
+}
+
 function searchFormListener() {
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
         event.preventDefault();
-        fetchSearchData(event.target.showSearch.value.split(" ").join("+"))
-            .then(json => {
+        let fetchData;
+        if (event.target.searchDropdown.value === "tvSeries"){
+            fetchData = fetchSearchData(event.target.showSearch.value.split(" ").join("+"), "shows")
+        }
+        else {
+            fetchData = fetchSearchData(event.target.showSearch.value.split(" ").join("+"), "people")
+        }
+            fetchData.then(json => {
                 document.querySelector("#cardList").innerHTML = "";
                 document.querySelector("#commentList").innerHTML = "";
                 document.querySelector("#cardContainer").style.display = "block";
                 document.querySelector("#detailsContainer").style.display = "none";
+                document.querySelector("#actorDetailContainer").style.display = "none";
                 json.forEach((element) => {
-                    renderSearchCard(element.show);
+                        if (event.target.searchDropdown.value === "tvSeries") {
+                            renderSearchCard(element.show);
+                        } else {
+                            renderActorSearchCard(element.person)
+                        }
                 })
                 if (document.querySelector("#searchMessage") === null) {
                     let searchMessage = document.createElement("div");
@@ -508,8 +618,8 @@ function rating() {
  * @param searchInput - data gathered from the search form
  * 
  */
-function fetchSearchData(searchInput) {
-    return fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`).then(res => res.json());
+function fetchSearchData(searchInput, type) {
+    return fetch(`https://api.tvmaze.com/search/${type}?q=${searchInput}`).then(res => res.json());
 }
 
 function fetchShowByID(id) {
@@ -519,4 +629,12 @@ function fetchShowByID(id) {
 function fetchCommentsByID(id) {
     return fetch(`http://localhost:3000/Comments?showID=${id}`)
         .then(res => res.json());
+}
+
+function fetchPersonByID(id){
+    return fetch(`https://api.tvmaze.com/people/${id}`).then(res => res.json());
+}
+
+function fetchCastingCreditsByPersonID(id){
+    return fetch(`https://api.tvmaze.com/people/${id}/castcredits?embed=show`).then(res => res.json());
 }
