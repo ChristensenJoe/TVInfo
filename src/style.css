@@ -86,7 +86,6 @@ ul {
 
 
 #detailsImageFile {
-    max-width: 300px;
     margin: auto;
 }
 
@@ -110,6 +109,11 @@ ul {
     text-align: right;
     margin-top:auto;
     margin-bottom: auto;
+}
+
+#detailsDescription {
+    float: left;
+    min-width: 300px;
 }
 
 #detailsTitle {

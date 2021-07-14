@@ -1,106 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>TV Info</title>
-    <link rel="icon" href="../images/icon.png">
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script defer src="script.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open Sans"/>
+  <title>TV Info</title>
+  <link rel="icon" href="../images/icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <script defer src="script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open Sans" />
 
 </head>
+
 <body>
-    <header id="websiteHeader" class="jumbotron text-center">
-        <img src="../images/tvinfologo2.png" width="300px">
-    </header>
-    
-    <div id="contentContainer" class="container-fluid">
+  <header id="websiteHeader" class="jumbotron text-center">
+    <img src="../images/tvinfologo2.png" width="300px">
+  </header>
+
+  <div id="contentContainer" class="container-fluid">
 
     <div id="searchDiv" class="container">
 
       <form class="row g-3" id="searchForm">
         <div class="row justify-content-center">
-        <div class="col-auto">
-          <label for="searchDescription" class="form-control-plaintext">TV Series:</label>
-        </div>
-        <div class="col-auto">
-          <input type="text" class="form-control" id="showSearch" name="showSearch" placeholder="Search TVinfo">
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-3">Search</button>
-        </div>
+          <div class="col-auto">
+            <label for="searchDescription" class="form-control-plaintext">TV Series:</label>
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" id="showSearch" name="showSearch" placeholder="Search TVinfo">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+          </div>
         </div>
       </form>
 
     </div>
 
     <div id="cardContainer" class="container">
-        <div class="container" id="cardWrapper">
-          <ul id="cardList"></ul>
-        </div>
+      <div class="container" id="cardWrapper">
+        <ul id="cardList"></ul>
+      </div>
     </div>
 
     <div id="detailsContainer" class="container">
-        <div class="row">
-          <div class="col h1" id="detailsTitle">
-          </div>
+      <div class="row">
+        <div class="col h1" id="detailsTitle">
         </div>
-        <div class="row">
+      </div>
+      <div class="row">
 
-          <div class="col-4" id="detailsImage">
-            <img alt="placeholder" class="img-fluid rounded-start border border-2" id="detailsImageFile">
+        <div class="col-4" id="detailsImage">
+          <img alt="placeholder" class="img-fluid rounded-start border border-2" id="detailsImageFile">
+        </div>
+
+        <div class="col-8" id="detailsDescription">
+          <div class="row" id="ratingRow">
+            <h5 id="ratingPlaceholder">Rating: 4</h5>
           </div>
 
-          <div class="col-8" id="detailsDescription">
-            <div class="row" id="ratingRow"> 
-              <h5 id="ratingPlaceholder">Rating: 4</h5>
-            </div>
+          <div class="row" id="descriptionRow">
+            <p id="summaryHeader" class="h4">Summary </p>
+            <p class="lead" id="detailsP"> </p>
+          </div>
 
-            <div class="row" id="descriptionRow">
-              <p id="summaryHeader" class="h4">Summary </p>
-                <p class="lead" id="detailsP"> </p>
-            </div>
 
-           
-              <div class="row" id="relatedInfoContainer">
-                <div class="row row-cols-2">
-                  <div class="col" id="episodes">episodes</div>
-                  <div class="col" id="runTime">run time</div>
-                  <div class="col" id="genre">genre</div>
-                  <div class="col" id="years">years</div>
-                </div>
-  
+          <div class="row" id="relatedInfoContainer">
+            <div class="row row-cols-2">
+              <div class="col" id="episodes">episodes</div>
+              <div class="col" id="runTime">run time</div>
+              <div class="col" id="genre">genre</div>
+              <div class="col" id="years">years</div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col" id="detailsRelatedInfo">
-            <div class="container" id="castHeader">
-              <h4 class="h4">Cast</h4>
-            </div>
-            <div class="row" id="castContainer">
-              
 
-            </div>
-            
-          </div>
-          
+      </div>
+      <div class="row">
+        <div class="container" id="castHeader">
+          <h4 class="h4">Cast</h4>
         </div>
-        <div class="row">
-          <div class="col" id="detailsCommentsBox">
-            <div id="commentBox">
-              <h4 class="h4">Comments</h4>
-              <ul id="commentList">
+      </div>
 
-              </ul>
-            </div>
-            <div id="commentFormContainer">
-             <form id="commentForm">
-      
+      <div class="row" id="castContainer">
+      </div>
+
+      <div class="row">
+        <div class="col" id="detailsCommentsBox">
+          <div id="commentBox">
+            <h4 class="h4">Comments</h4>
+            <ul id="commentList">
+
+            </ul>
+          </div>
+          <div id="commentFormContainer">
+            <form id="commentForm">
+
               <div class="mb-3 row">
                 <label for="inputComment" class="col-sm-2 col-form-label">Comment</label>
                 <div class="col-sm-10">
@@ -112,7 +113,7 @@
                 <label for="author" class="col-sm-2 col-form-label">Author</label>
                 <div class="col-sm-4">
                   <input type="text" class="form-control" id="commentAuthor">
-                
+
                 </div>
                 <div class="col-auto">
                   <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
@@ -128,7 +129,7 @@
                   </div>
                 </div>
 
-        
+
               </div>
 
 
@@ -141,21 +142,22 @@
               </div>
             </template>
 
-            </div>
           </div>
-        
         </div>
 
+      </div>
+
 
 
     </div>
 
-    </div>
+  </div>
 
 
 
 
 </body>
+
 </html>
 
 
@@ -175,7 +177,7 @@
           </form>
 -->
 
- <!--
+<!--
         <form id="searchForm" class="form-inline">
             <label id="searchLabel" name="searchLabel" class="form-label">TV Series:</label>
             <input type="text" name="showSearch" id="showSearch" class="form-control-sm" placeholder="Search...">
@@ -183,4 +185,4 @@
         </form>
 
       -->
-       <!--class="col-auto" -->
+<!--class="col-auto" -->
