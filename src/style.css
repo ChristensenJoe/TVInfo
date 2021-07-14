@@ -72,7 +72,8 @@ ul {
     text-align: center;
 }
 
-/* #detailsRelatedInfo, #detailsCommentsBox, #detailsImage, #detailsDescription, #ratingRow, #descriptionRow {
+/*
+ #detailsRelatedInfo, #detailsCommentsBox, #detailsImage, #detailsDescription, #ratingRow, #descriptionRow {
     border-color: black;
     border-width: 1px;
     border-style:solid;
@@ -98,11 +99,20 @@ ul {
     height: 70%;
     padding: 0;
     margin: 0;
-    
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
+
+#descriptionRow::-webkit-scrollbar {
+    display: none;
+}
+
 #relatedInfoContainer{
     height: 20%;
     text-align: left;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #ratingPlaceholder {
@@ -112,8 +122,10 @@ ul {
 }
 
 #detailsDescription {
-    float: left;
-    min-width: 300px;
+    /*float: left;*/
+    min-height: 100%;
+    overflow-y: auto;
+    display: block;
 }
 
 #detailsTitle {
@@ -124,7 +136,7 @@ ul {
     text-align: left;
     margin-top: 0;
     padding-top:0;
-    height: 80%;
+    height: 90%;
     overflow-wrap: break-word;
 
 }
@@ -135,15 +147,6 @@ ul {
     padding-bottom:0;
    
     height: 10%;
-}
-
-#relatedInfoContainer{
-    /* height: 60%; */
-    font-size: 18px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-
 }
 
 #castHeader {
