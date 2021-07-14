@@ -1,3 +1,5 @@
+let currentShow = 0;
+
 document.addEventListener("DOMContentLoaded", onStart);
 
 function onStart() {
@@ -175,6 +177,7 @@ function renderComment(comment) {
     cardDiv.append(cardBody);
     li.append(cardDiv);
     document.querySelector("#commentList").append(li);
+
 }
 
 function renderRating(comment) {
@@ -221,7 +224,7 @@ function renderRating(comment) {
 function renderDetailsListener(showID) {
     document.querySelector("#cardContainer").style.display = "none";
     document.querySelector("#detailsContainer").style.display = "block";
-
+    currentShow = showID;
     fetchShowByID(showID)
         .then(json => {
             let image = document.querySelector("#detailsImageFile");
@@ -286,6 +289,13 @@ function renderDetailsListener(showID) {
                 document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
             }
 
+            fetchCommentsByID(showID)
+            .then(commentArray => {
+                commentArray.forEach((comment) => {
+                    renderComment(comment);
+                });
+            })
+
         });
 }
 
@@ -309,11 +319,24 @@ function commentFormListener() {
     document.querySelector("#commentForm").addEventListener("submit", (event) => {
         event.preventDefault();
 
-        renderComment({
+        let comment = {
             content: event.target.inputComment.value,
             author: event.target.commentAuthor.value,
-            rating: rating()
-        });
+            rating: rating(),
+            showID: currentShow
+        };
+
+        renderComment(comment);
+
+        fetch("http://localhost:3000/Comments", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(comment),
+        })
+        .then(res => res.json())
+        .then();
 
         document.querySelector("#commentForm").reset();
     })
@@ -394,4 +417,9 @@ function fetchSearchData(searchInput) {
 
 function fetchShowByID(id) {
     return fetch(`https://api.tvmaze.com/shows/${id}?embed[]=cast&embed[]=episodes`).then(res => res.json());
+}
+
+function fetchCommentsByID(id) {
+    return fetch(`http://localhost:3000/Comments?showID=${id}`)
+    .then(res => res.json());
 }
