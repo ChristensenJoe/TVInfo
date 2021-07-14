@@ -172,8 +172,7 @@ function renderCastCard(castMember) {
     let card = document.createElement('div')
     card.className = "card"
     card.style.width = "250px"
-    card.style.marginLeft = "5px";
-    card.style.marginRight = "5px";
+    card.style.marginRight = "10px";
     card.style.flex = "0 0 auto"
 
     let img = document.createElement('img')
@@ -189,7 +188,10 @@ function renderCastCard(castMember) {
 
     let span = document.createElement("span");
     span.style.marginTop = "20px";
-    span.className = "border-bottom border-3";
+    span.style.width = "84%";
+    span.style.marginRight = "auto";
+    span.style.marginLeft = "auto";
+    span.className = "border-bottom border-3 rounded-3";
 
     let cardBody = document.createElement('div')
     cardBody.className = "card-body"
@@ -215,6 +217,72 @@ function renderCastCard(castMember) {
     card.append(img, span, cardBody)
 
     document.querySelector('#castContainer').append(card)
+}
+
+function renderShowCard(show) {
+    let card = document.createElement('div')
+    card.className = "card"
+    card.style.width = "250px"
+    card.style.marginRight = "10px";
+    card.style.flex = "0 0 auto"
+
+    let img = document.createElement('img')
+    if(show.image !== null) {
+        img.src = show.image.original;
+    }
+    else {
+        img.src = "../images/placeholder";
+    }
+    img.className = "card-img-top rounded-circle"
+    img.style.width = "200px"
+    img.style.height = "200px"
+    img.style.objectFit = "cover"
+    img.style.margin = "auto"
+    img.style.paddingTop = "3px"
+    img.style.marginTop = "10px";
+    img.alt = "show-picture"
+
+    let span = document.createElement("span");
+    span.style.marginTop = "20px";
+    span.style.width = "84%";
+    span.style.marginRight = "auto";
+    span.style.marginLeft = "auto";
+    span.className = "border-bottom border-3 rounded-3";
+
+    let cardBody = document.createElement('div')
+    cardBody.className = "card-body"
+
+    let h4 = document.createElement('h4')
+    h4.className = 'card-title'
+    h4.style.font = "bold";
+    h4.textContent = show.name;
+
+    let pAs = document.createElement('p')
+    pAs.className = 'card-text'
+    pAs.style.fontSize = "14px";
+    if(show.genres !== null) {
+    pAs.textContent = `Genre: ${show.genres.join(", ")}`;
+    }
+    else {
+        pAs.textContent = ``;
+    }
+    pAs.style.marginTop = "15px";
+
+    let pChar = document.createElement('p')
+    pChar.className = 'card-text'
+    if(show.language !== null) {
+    pChar.textContent = `Language: ${show.language}`;
+    }
+    else {
+        pChar.textContent = "";
+    }
+    pChar.style.fontSize = "14px";
+
+    cardBody.append(h4, pAs, pChar)
+
+    card.append(img, span, cardBody)
+
+    document.querySelector('#castingCreditsContainer').append(card)
 }
 
 function renderComment(comment) {
@@ -463,26 +531,28 @@ function renderDetailsListener(showID) {
         });
 }
 
-function renderActorDetailsListener(personID){
+function renderActorDetailsListener(personID) {
     document.querySelector("#cardContainer").style.display = "none";
     document.querySelector("#actorDetailContainer").style.display = "block";
     fetchPersonByID(personID)
-    .then(person => {
-        let actorName = document.querySelector('#actorNameHeader')
-        actorName.textContent = person.name
+        .then(person => {
+            let actorName = document.querySelector('#actorNameHeader')
+            actorName.textContent = person.name
 
-        let actorImg = document.querySelector('#actorDetailsImageFile')
-        if (person.image !== null){
-            actorImg.src = person.image.original
-        } else {
-            actorImg.src = '../images/placeholder.png'
-        }
+            let actorImg = document.querySelector('#actorDetailsImageFile')
+            if (person.image !== null) {
+                actorImg.src = person.image.original
+            } else {
+                actorImg.src = '../images/placeholder.png'
+            }
 
-    })
+        })
 
-    // fetchCastingCreditsByPersonID(personID)
-    // .then(credits => credits.forEach)
-
+    fetchCastingCreditsByPersonID(personID)
+        .then(shows => {
+            document.querySelector("#castingCreditsContainer").innerHTML = ''
+            shows.forEach((show) => renderShowCard(show["_embedded"].show))
+        });
 
 }
 
@@ -490,33 +560,33 @@ function searchFormListener() {
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
         event.preventDefault();
         let fetchData;
-        if (event.target.searchDropdown.value === "tvSeries"){
+        if (event.target.searchDropdown.value === "tvSeries") {
             fetchData = fetchSearchData(event.target.showSearch.value.split(" ").join("+"), "shows")
         }
         else {
             fetchData = fetchSearchData(event.target.showSearch.value.split(" ").join("+"), "people")
         }
-            fetchData.then(json => {
-                document.querySelector("#cardList").innerHTML = "";
-                document.querySelector("#commentList").innerHTML = "";
-                document.querySelector("#cardContainer").style.display = "block";
-                document.querySelector("#detailsContainer").style.display = "none";
-                document.querySelector("#actorDetailContainer").style.display = "none";
-                json.forEach((element) => {
-                        if (event.target.searchDropdown.value === "tvSeries") {
-                            renderSearchCard(element.show);
-                        } else {
-                            renderActorSearchCard(element.person)
-                        }
-                })
-                if (document.querySelector("#searchMessage") === null) {
-                    let searchMessage = document.createElement("div");
-                    searchMessage.className = "h5";
-                    searchMessage.id = "searchMessage";
-                    searchMessage.textContent = "Didn't find what you were looking for? Try being more specific in your search."
-                    document.querySelector("#cardWrapper").append(searchMessage);
+        fetchData.then(json => {
+            document.querySelector("#cardList").innerHTML = "";
+            document.querySelector("#commentList").innerHTML = "";
+            document.querySelector("#cardContainer").style.display = "block";
+            document.querySelector("#detailsContainer").style.display = "none";
+            document.querySelector("#actorDetailContainer").style.display = "none";
+            json.forEach((element) => {
+                if (event.target.searchDropdown.value === "tvSeries") {
+                    renderSearchCard(element.show);
+                } else {
+                    renderActorSearchCard(element.person)
                 }
-            });
+            })
+            if (document.querySelector("#searchMessage") === null) {
+                let searchMessage = document.createElement("div");
+                searchMessage.className = "h5";
+                searchMessage.id = "searchMessage";
+                searchMessage.textContent = "Didn't find what you were looking for? Try being more specific in your search."
+                document.querySelector("#cardWrapper").append(searchMessage);
+            }
+        });
     })
 }
 
@@ -631,10 +701,10 @@ function fetchCommentsByID(id) {
         .then(res => res.json());
 }
 
-function fetchPersonByID(id){
+function fetchPersonByID(id) {
     return fetch(`https://api.tvmaze.com/people/${id}`).then(res => res.json());
 }
 
-function fetchCastingCreditsByPersonID(id){
+function fetchCastingCreditsByPersonID(id) {
     return fetch(`https://api.tvmaze.com/people/${id}/castcredits?embed=show`).then(res => res.json());
 }

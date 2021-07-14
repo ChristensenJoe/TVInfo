@@ -157,6 +157,10 @@ ul {
     
 }
 
+#castContainerWrapper {
+    background-color: #dbdada;
+}
+
 #castContainer {
    /* height: 40%; */
     text-align: center;
@@ -164,6 +168,9 @@ ul {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 5px;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #commentFormContainer{
@@ -200,4 +207,29 @@ ul {
 #actorDetailContainer {
     background-color: #FAFAFF;
     border-radius: .25rem;
+    display: none;
 }
+
+#castingCreditsContainerWrapper {
+    /* height: 40%; */
+     background-color: #dbdada;
+ }
+
+ #castingCreditsContainer {
+    text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 5px;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+ #castCreditsBorder {
+     margin-top: 20px;
+     margin-bottom: 20px;
+     margin-left: auto;
+     margin-right: auto;
+     width: 90%;
+ }
