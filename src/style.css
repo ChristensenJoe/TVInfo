@@ -51,6 +51,8 @@ header {
     background-color: #FAFAFF;
     display: none;
     border-radius: .25rem;
+
+   /* min-width: 600px;*/
 }
 
 #contentContainer {
@@ -81,6 +83,7 @@ ul {
     padding-bottom: 10px;
 }
 */
+
 
 #detailsImageFile {
     max-width: 300px;
@@ -118,7 +121,7 @@ ul {
     margin-top: 0;
     padding-top:0;
     height: 80%;
-    overflow: scroll;
+    overflow-wrap: break-word;
 
 }
 
