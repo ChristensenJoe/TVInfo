@@ -531,6 +531,7 @@ function renderDetailsListener(showID) {
                 document.querySelector("#ratingError").remove();
             }
 
+            document.querySelector("#commentList").innerHTML = "";
             let overallRating = 0;
             fetchCommentsByID(showID)
                 .then(commentArray => {
