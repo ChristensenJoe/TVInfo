@@ -37,7 +37,7 @@ function renderSearchCard(searchData) {
     let image = document.createElement("img");
     image.className = "img-fluid rounded-start";
     image.alt = "searchCardImage";
-    if(searchData.image !== null) {
+    if (searchData.image !== null) {
         image.src = searchData.image.original;
     }
     else {
@@ -84,14 +84,14 @@ function renderSearchCard(searchData) {
     div1.append(div2);
 
     card.append(div1);
-  
-    card.addEventListener("click", function(){renderDetailsListener(searchData.id)});
+
+    card.addEventListener("click", function () { renderDetailsListener(searchData.id) });
 
     cardList.append(card);
 }
 
 
-function renderCastCard(castMember){
+function renderCastCard(castMember) {
     let card = document.createElement('div')
     card.className = "card"
     card.style.width = "250px"
@@ -99,9 +99,9 @@ function renderCastCard(castMember){
     card.style.marginRight = "5px";
     card.style.flex = "0 0 auto"
 
-    let img =  document.createElement('img')
+    let img = document.createElement('img')
     img.src = castMember.person.image.original
-    img.className ="card-img-top rounded-circle"
+    img.className = "card-img-top rounded-circle"
     img.style.width = "200px"
     img.style.height = "200px"
     img.style.objectFit = "cover"
@@ -200,9 +200,9 @@ function renderRating(comment) {
     rating.append(star1, star2, star3, star4, star5);
 
     let starContainer = Array.prototype.slice.call(rating.children);
-    
+
     starContainer.forEach((element) => {
-        if(count <= comment.rating) {
+        if (count <= comment.rating) {
             element.className = "bi bi-star-fill";
             count++;
         }
@@ -223,85 +223,85 @@ function renderDetailsListener(showID) {
     document.querySelector("#detailsContainer").style.display = "block";
 
     fetchShowByID(showID)
-    .then(json => {
-        let image = document.querySelector("#detailsImageFile");
-        if(json.image !== null) {
-            image.src = json.image.original;
-        }
-        else {
-            image.src = "../images/placeholder.png";
-        }
+        .then(json => {
+            let image = document.querySelector("#detailsImageFile");
+            if (json.image !== null) {
+                image.src = json.image.original;
+            }
+            else {
+                image.src = "../images/placeholder.png";
+            }
 
-        if(json.name !== null) {
-        document.querySelector("#detailsTitle").textContent = json.name;
-        }
-        else {
-            document.querySelector("#detailsTitle").textContent = "Title Not Available";
-        }
+            if (json.name !== null) {
+                document.querySelector("#detailsTitle").textContent = json.name;
+            }
+            else {
+                document.querySelector("#detailsTitle").textContent = "Title Not Available";
+            }
 
-        if(json.summary !== null && json.summary.length >= 1) {
-            let testElement = document.createElement("div");
-            testElement.innerHTML = json.summary;
-            document.querySelector("#detailsP").textContent = testElement.innerText;
+            if (json.summary !== null && json.summary.length >= 1) {
+                let testElement = document.createElement("div");
+                testElement.innerHTML = json.summary;
+                document.querySelector("#detailsP").textContent = testElement.innerText;
 
-        }
-        else {
-            document.querySelector("#detailsP").textContent = "Summary not available";
-        }
+            }
+            else {
+                document.querySelector("#detailsP").textContent = "Summary not available";
+            }
 
-        if(json["_embedded"].episodes.length > 1) {
-        document.querySelector("#episodes").textContent = `Episodes: ${json["_embedded"].episodes.length}`;
-        }
-        else {
-            document.querySelector("#episodes").textContent = "Episodes Information Unavailable"
-        }
+            if (json["_embedded"].episodes.length > 1) {
+                document.querySelector("#episodes").textContent = `Episodes: ${json["_embedded"].episodes.length}`;
+            }
+            else {
+                document.querySelector("#episodes").textContent = "Episodes Information Unavailable"
+            }
 
-        if(json.runtime !== null) {
-            document.querySelector("#runTime").textContent = `Runtime: ${json.runtime} minutes`;
-        }
-        else {
-            document.querySelector("#runTime").textContent = "Runtime Information Unavailable";
-        }
+            if (json.runtime !== null) {
+                document.querySelector("#runTime").textContent = `Runtime: ${json.runtime} minutes`;
+            }
+            else {
+                document.querySelector("#runTime").textContent = "Runtime Information Unavailable";
+            }
 
-        if(json.genres !== null && json.genres.length >= 1) {
-        document.querySelector("#genre").textContent = `Genres: ${json.genres.join(", ")}`;
-        }
-        else {
-            document.querySelector("#genre").textContent = "Genre Information Unavailable";
-        }
+            if (json.genres !== null && json.genres.length >= 1) {
+                document.querySelector("#genre").textContent = `Genres: ${json.genres.join(", ")}`;
+            }
+            else {
+                document.querySelector("#genre").textContent = "Genre Information Unavailable";
+            }
 
-        if(json["_embedded"].episodes.length > 1) {
-            document.querySelector("#years").textContent = `${json["_embedded"].episodes[0].airdate.slice(0, 4)} - ${json["_embedded"].episodes[json["_embedded"].episodes.length-1].airdate.slice(0, 4)}`;
-        }
-        else {
-            document.querySelector("#years").textContent = "Year Information Unavailable"
-        }
+            if (json["_embedded"].episodes.length > 1) {
+                document.querySelector("#years").textContent = `${json["_embedded"].episodes[0].airdate.slice(0, 4)} - ${json["_embedded"].episodes[json["_embedded"].episodes.length - 1].airdate.slice(0, 4)}`;
+            }
+            else {
+                document.querySelector("#years").textContent = "Year Information Unavailable"
+            }
 
 
-        if (json["_embedded"].cast !== null && json["_embedded"].cast.length >= 1){
-            document.querySelector("#castContainer").innerHTML =''
-            json["_embedded"].cast.forEach((member) => renderCastCard(member))
+            if (json["_embedded"].cast !== null && json["_embedded"].cast.length >= 1) {
+                document.querySelector("#castContainer").innerHTML = ''
+                json["_embedded"].cast.forEach((member) => renderCastCard(member))
 
-        } else {
-            document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
-        }
+            } else {
+                document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
+            }
 
-    });
+        });
 }
 
 function searchFormListener() {
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
         event.preventDefault();
         fetchSearchData(event.target.showSearch.value.split(" ").join("+"))
-        .then(json => {
-            document.querySelector("#cardList").innerHTML = "";
-            document.querySelector("#commentList").innerHTML = "";
-            document.querySelector("#cardContainer").style.display = "block";
-            document.querySelector("#detailsContainer").style.display = "none";
-            json.forEach((element) => {
-                renderSearchCard(element.show);
-            })
-        });
+            .then(json => {
+                document.querySelector("#cardList").innerHTML = "";
+                document.querySelector("#commentList").innerHTML = "";
+                document.querySelector("#cardContainer").style.display = "block";
+                document.querySelector("#detailsContainer").style.display = "none";
+                json.forEach((element) => {
+                    renderSearchCard(element.show);
+                })
+            });
     })
 }
 
@@ -372,7 +372,7 @@ function rating() {
     let starContainer = Array.prototype.slice.call(document.querySelector("#rating").children);
     let count = 0;
     starContainer.forEach((element) => {
-        if(element.className === "bi bi-star-fill") {
+        if (element.className === "bi bi-star-fill") {
             count++;
         }
     });
@@ -388,7 +388,7 @@ function rating() {
  * @param searchInput - data gathered from the search form
  * 
  */
- function fetchSearchData(searchInput) {
+function fetchSearchData(searchInput) {
     return fetch(`https://api.tvmaze.com/search/shows?q=${searchInput}`).then(res => res.json());
 }
 
