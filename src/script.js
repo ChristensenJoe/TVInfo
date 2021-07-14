@@ -185,7 +185,7 @@ function renderRating(comment) {
     let rating = document.createElement("div");
 
     let star1 = document.createElement("span");
-    star1.className = "bi bi-star";
+    star1.className = "bi bi-star-fill";
     star1.style.padding = "2px";
     let star2 = document.createElement("span");
     star2.className = "bi bi-star";
@@ -213,6 +213,86 @@ function renderRating(comment) {
 
     return rating;
 
+}
+
+function renderTopStars(rating) {
+    let starContainer = Array.prototype.slice.call(document.querySelector("#overallRating").children);
+
+    if (rating > 4.75) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-fill";
+        starContainer[4].className = "bi bi-star-fill";
+    }
+    else if (rating > 4.25) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-fill";
+        starContainer[4].className = "bi bi-star-half";
+    }
+    else if (rating > 3.75) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-fill";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating > 3.25) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star-half";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating > 2.75) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-fill";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating > 2.25) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star-half";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating > 1.75) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-fill";
+        starContainer[2].className = "bi bi-star";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating > 1.25) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star-half";
+        starContainer[2].className = "bi bi-star";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+    }
+    else if (rating >= 1) {
+        starContainer[0].className = "bi bi-star-fill";
+        starContainer[1].className = "bi bi-star";
+        starContainer[2].className = "bi bi-star";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+    }
+    else {
+        starContainer[0].className = "bi bi-star";
+        starContainer[1].className = "bi bi-star";
+        starContainer[2].className = "bi bi-star";
+        starContainer[3].className = "bi bi-star";
+        starContainer[4].className = "bi bi-star";
+        let errorMessage = document.createElement("span");
+        errorMessage.textContent = "No Rating Data";
+        errorMessage.id = "ratingError";
+        errorMessage.className = "h5";
+        document.querySelector("#overallRating").prepend(errorMessage);
+    }
 }
 //Event Listeners
 
@@ -289,12 +369,20 @@ function renderDetailsListener(showID) {
                 document.querySelector('#castContainer').textContent = "Cast Information Unavailable"
             }
 
+            if (document.querySelector("#ratingError") !== null) {
+                document.querySelector("#ratingError").remove();
+            }
+
+            let overallRating = 0;
             fetchCommentsByID(showID)
-            .then(commentArray => {
-                commentArray.forEach((comment) => {
-                    renderComment(comment);
-                });
-            })
+                .then(commentArray => {
+                    commentArray.forEach((comment) => {
+                        renderComment(comment);
+                        overallRating += comment.rating;
+                    });
+                    overallRating = overallRating / commentArray.length;
+                    renderTopStars(overallRating);
+                })
 
         });
 }
@@ -311,6 +399,13 @@ function searchFormListener() {
                 json.forEach((element) => {
                     renderSearchCard(element.show);
                 })
+                if (document.querySelector("#searchMessage") === null) {
+                    let searchMessage = document.createElement("div");
+                    searchMessage.className = "h5";
+                    searchMessage.id = "searchMessage";
+                    searchMessage.textContent = "Didn't find what you were looking for? Try being more specific in your search."
+                    document.querySelector("#cardWrapper").append(searchMessage);
+                }
             });
     })
 }
@@ -329,16 +424,17 @@ function commentFormListener() {
         renderComment(comment);
 
         fetch("http://localhost:3000/Comments", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(comment),
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(comment),
         })
-        .then(res => res.json())
-        .then();
+            .then(res => res.json())
+            .then();
 
         document.querySelector("#commentForm").reset();
+        clearStars();
     })
 }
 
@@ -386,6 +482,7 @@ function headerListener() {
 
 function clearStars() {
     let starContainer = Array.prototype.slice.call(document.querySelector("#rating").children);
+    starContainer.shift();
     starContainer.forEach((star) => {
         star.className = "bi bi-star";
     })
@@ -421,5 +518,5 @@ function fetchShowByID(id) {
 
 function fetchCommentsByID(id) {
     return fetch(`http://localhost:3000/Comments?showID=${id}`)
-    .then(res => res.json());
+        .then(res => res.json());
 }
