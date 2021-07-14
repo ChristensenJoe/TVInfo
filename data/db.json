@@ -1,102 +1,25 @@
 {
   "Comments": [
     {
-      "content": "asdadada",
-      "author": "adada",
+      "content": "This is one of my favorite shows of all time!",
+      "author": "Lisa",
       "rating": 5,
-      "id": 1,
-      "showID": 12312
+      "showID": 139,
+      "id": 1
     },
     {
-      "content": "This is a test",
-      "author": "test",
-      "rating": 3,
+      "content": "I hate this show. Do not watch!",
+      "author": "Bob",
+      "rating": 1,
       "showID": 139,
       "id": 2
     },
     {
-      "content": "This is also a test",
-      "author": "dddd",
-      "rating": 1,
-      "showID": 139,
-      "id": 3
-    },
-    {
-      "content": "Test Here",
-      "author": "New Id?",
-      "rating": 3,
-      "showID": 41734,
-      "id": 4
-    },
-    {
-      "content": "Another test",
-      "author": "Testy",
-      "rating": 0,
-      "showID": 139,
-      "id": 5
-    },
-    {
-      "content": "dfsdf",
-      "author": "sfs",
+      "content": "Funny show.",
+      "author": "Tom",
       "rating": 4,
-      "showID": 139,
-      "id": 6
-    },
-    {
-      "content": "dfsdf",
-      "author": "sfsfs",
-      "rating": 3,
-      "showID": 139,
-      "id": 7
-    },
-    {
-      "content": "dsada",
-      "author": "aas",
-      "rating": 2,
-      "showID": 139,
-      "id": 8
-    },
-    {
-      "content": "sdfsdf",
-      "author": "sfds",
-      "rating": 2,
-      "showID": 139,
-      "id": 9
-    },
-    {
-      "content": "",
-      "author": "",
-      "rating": 5,
-      "showID": 139,
-      "id": 10
-    },
-    {
-      "content": "",
-      "author": "",
-      "rating": 5,
-      "showID": 139,
-      "id": 11
-    },
-    {
-      "content": "",
-      "author": "",
-      "rating": 5,
-      "showID": 139,
-      "id": 12
-    },
-    {
-      "content": "",
-      "author": "",
-      "rating": 5,
-      "showID": 139,
-      "id": 13
-    },
-    {
-      "content": "",
-      "author": "",
-      "rating": 5,
-      "showID": 139,
-      "id": 14
+      "showID": 321,
+      "id": 3
     }
   ]
 }
