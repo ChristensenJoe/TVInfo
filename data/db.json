@@ -1,46 +1,4 @@
 {
   "Comments": [
-    {
-      "content": "This is one of my favorite shows of all time!",
-      "author": "Lisa",
-      "rating": 5,
-      "showID": 139,
-      "id": 1
-    },
-    {
-      "content": "I hate this show. Do not watch!",
-      "author": "Bob",
-      "rating": 1,
-      "showID": 139,
-      "id": 2
-    },
-    {
-      "content": "Funny show.",
-      "author": "Tom",
-      "rating": 4,
-      "showID": 321,
-      "id": 3
-    },
-    {
-      "content": "This is a lovely show.",
-      "author": "James",
-      "rating": 5,
-      "showID": 48917,
-      "id": 4
-    },
-    {
-      "content": "Great Show!",
-      "author": "David",
-      "rating": 4,
-      "showID": 32736,
-      "id": 5
-    },
-    {
-      "content": "Wasn't good. Bad acting!",
-      "author": "Sarah",
-      "rating": 1,
-      "showID": 1834,
-      "id": 6
-    }
   ]
 }

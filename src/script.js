@@ -374,6 +374,7 @@ function renderRating(comment) {
 function renderTopStars(rating) {
     let starContainer = Array.prototype.slice.call(document.querySelector("#overallRating").children);
 
+    console.log(rating);
     if (rating > 4.75) {
         starContainer[0].className = "bi bi-star-fill";
         starContainer[1].className = "bi bi-star-fill";
@@ -534,14 +535,14 @@ function renderDetailsListener(showID) {
             document.querySelector("#commentList").innerHTML = "";
             let overallRating = 0;
             fetchCommentsByID(showID)
-                .then(commentArray => {
-                    commentArray.forEach((comment) => {
-                        renderComment(comment);
-                        overallRating += comment.rating;
+            .then(commentArray => {
+                commentArray.forEach((comment) => {
+                    renderComment(comment);
+                    overallRating += comment.rating;
                     });
                     overallRating = overallRating / commentArray.length;
-                    renderTopStars(overallRating);
-                })
+                renderTopStars(overallRating);
+            });
 
         });
 }
@@ -637,10 +638,23 @@ function commentFormListener() {
             body: JSON.stringify(comment),
         })
             .then(res => res.json())
-            .then();
+            .then(json => {
+                let overallRating = 0;
+                fetchCommentsByID(currentShow)
+                .then(commentArray => {
+                commentArray.forEach((comment) => {
+                overallRating += comment.rating;
+                });
+                overallRating = overallRating / commentArray.length;
+                if(document.querySelector("#ratingError") !== null) {
+                    document.querySelector("#ratingError").remove();
+                }
+                renderTopStars(overallRating);
+            });
 
         document.querySelector("#commentForm").reset();
         clearStars();
+});
     })
 }
 
