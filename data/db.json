@@ -27,6 +27,20 @@
       "rating": 5,
       "showID": 48917,
       "id": 4
+    },
+    {
+      "content": "Great Show!",
+      "author": "David",
+      "rating": 4,
+      "showID": 32736,
+      "id": 5
+    },
+    {
+      "content": "Wasn't good. Bad acting!",
+      "author": "Sarah",
+      "rating": 1,
+      "showID": 1834,
+      "id": 6
     }
   ]
 }
