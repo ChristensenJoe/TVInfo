@@ -355,10 +355,13 @@ function renderComment(comment) {
     spanDislikeCount.style.padding = '3px';
     spanDislikeButton.style.padding = '3px';
 
-    spanLikeCount.textContent = 0;
+    spanLikeCount.textContent = comment.likes;
     spanLikeButton.className = "bi bi-hand-thumbs-up"
-    spanDislikeCount.textContent = 0;
+    spanDislikeCount.textContent = comment.dislikes;
     spanDislikeButton.className = "bi bi-hand-thumbs-down"
+
+    spanLikeButton.id = "likeButton"
+    spanDislikeButton.id = 'dislikeButton'
 
     likesDiv.append(spanLikeCount, spanLikeButton, spanDislikeCount, spanDislikeButton)
     col2.append(likesDiv)
@@ -369,6 +372,13 @@ function renderComment(comment) {
     cardDiv.append(cardBody);
     li.append(cardDiv);
     document.querySelector("#commentList").append(li);
+
+    spanLikeButton.addEventListener('click', (e) => {
+        likeButtonListener(e, comment)
+    })
+    spanDislikeButton.addEventListener('click', (e) => {
+        dislikeButtonListener(e, comment)
+    })
 
 }
 
@@ -657,14 +667,17 @@ function commentFormListener() {
     document.querySelector("#commentForm").addEventListener("submit", (event) => {
         event.preventDefault();
 
+        //fetch('http://localhost:3000/Comments')
+
         let comment = {
             content: event.target.inputComment.value,
             author: event.target.commentAuthor.value,
             rating: rating(),
-            showID: currentShow
+            showID: currentShow,
+            likes: 0,
+            dislikes: 0
         };
 
-        renderComment(comment);
 
         fetch("http://localhost:3000/Comments", {
             method: "POST",
@@ -686,12 +699,70 @@ function commentFormListener() {
                     document.querySelector("#ratingError").remove();
                 }
                 renderTopStars(overallRating);
+                comment = json
+                renderComment(comment);
             });
 
         document.querySelector("#commentForm").reset();
         clearStars();
 });
     })
+}
+
+function likeButtonListener(e, comment){
+    if (e.target.className === "bi bi-hand-thumbs-up"){
+        e.target.className = "bi bi-hand-thumbs-up-fill"
+        fetch(`http://localhost:3000/Comments/${comment.id}`, {
+            method: "PATCH",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) +1})
+        }) 
+        .then(res => res.json())
+        .then(json => {
+            //console.log(e.target.parentNode.childNodes[0])
+            e.target.parentNode.childNodes[0].textContent = json.likes
+        })
+    }
+    else {
+        e.target.className = "bi bi-hand-thumbs-up"
+        fetch(`http://localhost:3000/Comments/${comment.id}`, {
+            method: "PATCH",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
+        }) 
+        .then(res => res.json())
+        .then(json =>{
+            e.target.parentNode.childNodes[0].textContent = json.likes
+        })
+    }
+}
+
+
+function dislikeButtonListener(e, comment){
+    if (e.target.className === "bi bi-hand-thumbs-down"){
+        e.target.className = "bi bi-hand-thumbs-down-fill"
+        fetch(`http://localhost:3000/Comments/${comment.id}`, {
+            method: "PATCH",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) + 1 })
+        }) 
+        .then(res => res.json())
+        .then(json => {
+            e.target.parentNode.childNodes[2].textContent = json.dislikes
+        })
+    }
+    else {
+        e.target.className = "bi bi-hand-thumbs-down"
+        fetch(`http://localhost:3000/Comments/${comment.id}`, {
+            method: "PATCH",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
+        }) 
+        .then(res => res.json())
+        .then(json => {
+            e.target.parentNode.childNodes[2].textContent = json.dislikes
+        })
+    }
 }
 
 function ratingListener() {
@@ -733,6 +804,7 @@ function headerListener() {
         location.reload();
     })
 }
+
 
 //Helper Functions
 
