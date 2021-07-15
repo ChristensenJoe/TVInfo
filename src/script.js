@@ -309,8 +309,15 @@ function renderComment(comment) {
     cardDiv.style.marginLeft = "auto";
     cardDiv.style.marginTop = "10px";
     cardDiv.style.marginBottom = "10px";
+
     let cardBody = document.createElement("div");
     cardBody.className = "card-body";
+
+    let row1 = document.createElement('div')
+    row1.className = "row"
+
+    let col1 = document.createElement('div')
+    col1.className = "col-10"
 
     let figure = document.createElement("figure");
     figure.className = "text-start";
@@ -326,10 +333,39 @@ function renderComment(comment) {
     let figCaption = document.createElement("figcaption");
     figCaption.className = "blockquote-footer";
     figCaption.textContent = comment.author;
-
     figure.append(blockquote, figCaption);
 
-    cardBody.append(renderRating(comment), figure);
+    col1.append(figure)
+
+    let col2 = document.createElement('div')
+    col2.className = "col-2"
+
+    let likesDiv = document.createElement('div')
+    let spanLikeCount = document.createElement('span')
+    let spanLikeButton = document.createElement('span')
+    let spanDislikeCount = document.createElement('span')
+    let spanDislikeButton = document.createElement('span')
+
+    likesDiv.style.marginLeft = "auto"
+    likesDiv.style.marginRight = "auto"
+    likesDiv.style.display = "block"
+
+    spanLikeCount.style.padding = '3px';
+    spanLikeButton.style.padding = '3px';
+    spanDislikeCount.style.padding = '3px';
+    spanDislikeButton.style.padding = '3px';
+
+    spanLikeCount.textContent = 0;
+    spanLikeButton.className = "bi bi-hand-thumbs-up"
+    spanDislikeCount.textContent = 0;
+    spanDislikeButton.className = "bi bi-hand-thumbs-down"
+
+    likesDiv.append(spanLikeCount, spanLikeButton, spanDislikeCount, spanDislikeButton)
+    col2.append(likesDiv)
+
+    row1.append(col1, col2)
+
+    cardBody.append(renderRating(comment), row1);
     cardDiv.append(cardBody);
     li.append(cardDiv);
     document.querySelector("#commentList").append(li);
