@@ -1,37 +1,37 @@
 {
   "Comments": [
     {
-      "content": "Test review",
-      "author": "Claire",
-      "rating": 4,
-      "showID": 139,
-      "likes": 2,
+      "content": "sadasdasdas",
+      "author": "asdasd",
+      "rating": 3,
+      "showID": 32736,
+      "likes": 1,
       "dislikes": 0,
       "id": 1
     },
     {
-      "content": "I like this show.",
-      "author": "Bob",
-      "rating": 4,
-      "showID": 139,
+      "content": "dada",
+      "author": "aas",
+      "rating": 1,
+      "showID": 32736,
       "likes": 0,
       "dislikes": 1,
       "id": 2
     },
     {
-      "content": "another test ",
-      "author": "test",
-      "rating": 2,
-      "showID": 139,
+      "content": "asasa",
+      "author": "ssss",
+      "rating": 1,
+      "showID": 32736,
       "likes": 1,
       "dislikes": 0,
       "id": 3
     },
     {
-      "content": "test 3",
-      "author": "test",
-      "rating": 3,
-      "showID": 139,
+      "content": "sadadaaaa",
+      "author": "aasss",
+      "rating": 5,
+      "showID": 1363,
       "likes": 1,
       "dislikes": 0,
       "id": 4

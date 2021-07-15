@@ -299,7 +299,7 @@ function renderShowCard(show) {
 }
 
 function renderComment(comment) {
-    let li = document.createElement("li");
+    let commentCard = document.createElement("li");
 
 
     let cardDiv = document.createElement("div");
@@ -338,7 +338,7 @@ function renderComment(comment) {
     col1.append(figure)
 
     let col2 = document.createElement('div')
-    col2.className = "col-2"
+    col2.className = "col-2 d-flex justify-content-center"
 
     let likesDiv = document.createElement('div')
     let spanLikeCount = document.createElement('span')
@@ -364,20 +364,34 @@ function renderComment(comment) {
     spanDislikeButton.id = 'dislikeButton'
 
     likesDiv.append(spanLikeCount, spanLikeButton, spanDislikeCount, spanDislikeButton)
-    col2.append(likesDiv)
+
+    likesDiv.style.paddingTop = "3px";
+
+    let deleteDiv = document.createElement('div');
+    let spanDelete = document.createElement("button");
+    spanDelete.className = "btn btn-sm btn-outline-danger bi bi-trash";
+    spanDelete.style.margin = "auto";
+    spanDelete.type = "button";
+
+    deleteDiv.append(spanDelete);
+    col2.append(likesDiv, deleteDiv);
 
     row1.append(col1, col2)
 
     cardBody.append(renderRating(comment), row1);
     cardDiv.append(cardBody);
-    li.append(cardDiv);
-    document.querySelector("#commentList").append(li);
+    commentCard.append(cardDiv);
+    document.querySelector("#commentList").append(commentCard);
 
     spanLikeButton.addEventListener('click', (e) => {
         likeButtonListener(e, comment)
     })
     spanDislikeButton.addEventListener('click', (e) => {
         dislikeButtonListener(e, comment)
+    })
+
+    spanDelete.addEventListener("click", () => {
+        deleteCommentListener(comment, commentCard, spanDelete);
     })
 
 }
@@ -420,7 +434,6 @@ function renderRating(comment) {
 function renderTopStars(rating) {
     let starContainer = Array.prototype.slice.call(document.querySelector("#overallRating").children);
 
-    console.log(rating);
     if (rating > 4.75) {
         starContainer[0].className = "bi bi-star-fill";
         starContainer[1].className = "bi bi-star-fill";
@@ -712,24 +725,25 @@ function commentFormListener() {
 function likeButtonListener(e, comment){
     if (e.target.className === "bi bi-hand-thumbs-up"){
         e.target.className = "bi bi-hand-thumbs-up-fill"
-        fetch(`http://localhost:3000/Comments/${comment.id}`, {
-            method: "PATCH",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) +1})
-        }) 
+        updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) +1})
         .then(res => res.json())
         .then(json => {
             //console.log(e.target.parentNode.childNodes[0])
             e.target.parentNode.childNodes[0].textContent = json.likes
         })
+        if(e.target.parentNode.childNodes[3].className === "bi bi-hand-thumbs-down-fill") {
+            e.target.parentNode.childNodes[3].className = "bi bi-hand-thumbs-down"
+            updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) -1})
+            .then(res => res.json())
+            .then(json => {
+                //console.log(e.target.parentNode.childNodes[0])
+                e.target.parentNode.childNodes[2].textContent = json.dislikes
+            })
+        }
     }
     else {
         e.target.className = "bi bi-hand-thumbs-up"
-        fetch(`http://localhost:3000/Comments/${comment.id}`, {
-            method: "PATCH",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
-        }) 
+        updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
         .then(res => res.json())
         .then(json =>{
             e.target.parentNode.childNodes[0].textContent = json.likes
@@ -741,23 +755,24 @@ function likeButtonListener(e, comment){
 function dislikeButtonListener(e, comment){
     if (e.target.className === "bi bi-hand-thumbs-down"){
         e.target.className = "bi bi-hand-thumbs-down-fill"
-        fetch(`http://localhost:3000/Comments/${comment.id}`, {
-            method: "PATCH",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) + 1 })
-        }) 
+        updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) + 1 })
         .then(res => res.json())
         .then(json => {
             e.target.parentNode.childNodes[2].textContent = json.dislikes
         })
+        if(e.target.parentNode.childNodes[1].className === "bi bi-hand-thumbs-up-fill") {
+            e.target.parentNode.childNodes[1].className = "bi bi-hand-thumbs-up"
+            updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
+            .then(res => res.json())
+            .then(json => {
+                //console.log(e.target.parentNode.childNodes[0])
+                e.target.parentNode.childNodes[0].textContent = json.likes
+            })
+        }
     }
     else {
         e.target.className = "bi bi-hand-thumbs-down"
-        fetch(`http://localhost:3000/Comments/${comment.id}`, {
-            method: "PATCH",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
-        }) 
+        updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
         .then(res => res.json())
         .then(json => {
             e.target.parentNode.childNodes[2].textContent = json.dislikes
@@ -805,6 +820,31 @@ function headerListener() {
     })
 }
 
+function deleteCommentListener(comment, commentCard, spanDelete) {
+    let modalDiv = document.createElement("div");
+    modalDiv.id = "modalWrapper";
+    modalDiv.innerHTML = generateModal();
+    document.body.append(modalDiv);
+    spanDelete.setAttribute("data-bs-toggle", "modal");
+    spanDelete.setAttribute("data-bs-target", "#deleteModal");
+    document.querySelector("#deleteCommentButton").addEventListener("click", () => {
+        modalDeleteButtonListener(comment, commentCard, myModal);
+    });
+    let myModal = new bootstrap.Modal(modalDiv.childNodes[0]);
+    myModal.show();
+}
+
+function modalDeleteButtonListener(comment, commentCard, myModal) {
+    fetchDeleteCommentByID(comment.id)
+        .then(res => res.json())
+        .then(json => {
+
+        myModal.hide();
+        document.querySelector("#modalWrapper").remove();
+        commentCard.remove();
+        });
+}
+
 
 //Helper Functions
 
@@ -826,6 +866,26 @@ function rating() {
     });
 
     return count;
+}
+
+function generateModal() {
+    return `<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Comment?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this comment?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="deleteCommentButton" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>`
 }
 
 //Data Fetches
@@ -855,4 +915,18 @@ function fetchPersonByID(id) {
 
 function fetchCastingCreditsByPersonID(id) {
     return fetch(`https://api.tvmaze.com/people/${id}/castcredits?embed=show`).then(res => res.json());
+}
+
+function updateLikesAndDislikes(id, obj) {
+    return fetch(`http://localhost:3000/Comments/${id}`, {
+            method: "PATCH",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(obj)
+        })
+}
+
+function fetchDeleteCommentByID(id) {
+    return fetch(`http://localhost:3000/Comments/${id}`, {
+        method: "DELETE",
+    })
 }
