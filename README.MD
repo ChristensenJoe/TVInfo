@@ -39,7 +39,6 @@ In order to set up this project locally, you will need to install and launch JSO
 ## Usage
 TVInfo can be used to search for TV shows or actors. Each search query returns a list of results. A user can click on the desired result to see a page with more details on either the TV show or Actor.
 
-<br />
 
 ### TV Show Functionality
 On a TV show's detail page, a user can:
@@ -49,7 +48,7 @@ On a TV show's detail page, a user can:
 - See previous comments left by other users
 - Like or dislike previous comments
 - Add a new comment and rating
-*Note that all comments and ratings are unique to TVInfo's database.
+- *Note that all comments and ratings are unique to TVInfo's database.
 
 ### Actor Functionality
 On an actor's detail page, a user can:
