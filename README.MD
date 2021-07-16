@@ -1,5 +1,5 @@
 ## About This Project
-<img src="./images/logo_background.png" alt="logo" width="400px">
+<img src="./images/logo_black.png" alt="logo" width="400px">
 <br /> 
 
 TVInfo is a single-page application that allows a user to search and see information about TV shows and actors, and provide comments and ratings. This project uses data from the [TV Maze API](https://www.tvmaze.com/api). 
