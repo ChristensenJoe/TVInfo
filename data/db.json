@@ -1,37 +1,37 @@
 {
   "Comments": [
     {
-      "content": "sadasdasdas",
-      "author": "asdasd",
-      "rating": 3,
-      "showID": 32736,
-      "likes": 1,
-      "dislikes": 0,
+      "content": "This is one of my favorite shows - it hits at all the feels. Can't wait for season 2!",
+      "author": "Claire",
+      "rating": 5,
+      "showID": 44458,
+      "likes": 8,
+      "dislikes": 1,
       "id": 1
     },
     {
-      "content": "dada",
-      "author": "aas",
-      "rating": 1,
-      "showID": 32736,
-      "likes": 0,
-      "dislikes": 1,
+      "content": "Baby yoda is cute!",
+      "author": "Joe",
+      "rating": 5,
+      "showID": 38963,
+      "likes": 6,
+      "dislikes": 0,
       "id": 2
     },
     {
-      "content": "asasa",
-      "author": "ssss",
+      "content": "I don't understand the hype of this show. BORING!",
+      "author": "Karen",
       "rating": 1,
-      "showID": 32736,
-      "likes": 1,
-      "dislikes": 0,
+      "showID": 38963,
+      "likes": 0,
+      "dislikes": 12,
       "id": 3
     },
     {
-      "content": "sadadaaaa",
-      "author": "aasss",
-      "rating": 5,
-      "showID": 1363,
+      "content": "I really enjoy this show - easy view.",
+      "author": "Tom",
+      "rating": 4,
+      "showID": 38963,
       "likes": 1,
       "dislikes": 0,
       "id": 4

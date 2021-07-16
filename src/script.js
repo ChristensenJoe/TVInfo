@@ -176,7 +176,7 @@ function renderCastCard(castMember) {
     card.style.flex = "0 0 auto"
 
     let img = document.createElement('img')
-    if(castMember.person.image !== null) {
+    if (castMember.person.image !== null) {
         img.src = castMember.person.image.original
     }
     else {
@@ -236,7 +236,7 @@ function renderShowCard(show) {
     card.style.flex = "0 0 auto"
 
     let img = document.createElement('img')
-    if(show.image !== null) {
+    if (show.image !== null) {
         img.src = show.image.original;
     }
     else {
@@ -269,8 +269,8 @@ function renderShowCard(show) {
     let pAs = document.createElement('p')
     pAs.className = 'card-text'
     pAs.style.fontSize = "14px";
-    if(show.genres.length >= 1) {
-    pAs.textContent = `Genre: ${show.genres.join(", ")}`;
+    if (show.genres.length >= 1) {
+        pAs.textContent = `Genre: ${show.genres.join(", ")}`;
     }
     else {
         pAs.textContent = ``;
@@ -279,8 +279,8 @@ function renderShowCard(show) {
 
     let pChar = document.createElement('p')
     pChar.className = 'card-text'
-    if(show.language !== null) {
-    pChar.textContent = `Language: ${show.language}`;
+    if (show.language !== null) {
+        pChar.textContent = `Language: ${show.language}`;
     }
     else {
         pChar.textContent = "";
@@ -594,14 +594,14 @@ function renderDetailsListener(showID) {
             document.querySelector("#commentList").innerHTML = "";
             let overallRating = 0;
             fetchCommentsByID(showID)
-            .then(commentArray => {
-                commentArray.forEach((comment) => {
-                    renderComment(comment);
-                    overallRating += comment.rating;
+                .then(commentArray => {
+                    commentArray.forEach((comment) => {
+                        renderComment(comment);
+                        overallRating += comment.rating;
                     });
                     overallRating = overallRating / commentArray.length;
-                renderTopStars(overallRating);
-            });
+                    renderTopStars(overallRating);
+                });
 
         });
 }
@@ -627,8 +627,8 @@ function renderActorDetailsListener(personID) {
     fetchCastingCreditsByPersonID(personID)
         .then(shows => {
             document.querySelector("#castingCreditsContainer").innerHTML = ''
-            if(shows.length >= 1) {
-            shows.forEach((show) => renderShowCard(show["_embedded"].show))
+            if (shows.length >= 1) {
+                shows.forEach((show) => renderShowCard(show["_embedded"].show))
             }
             else {
                 let p = document.createElement("p");
@@ -703,80 +703,80 @@ function commentFormListener() {
             .then(json => {
                 let overallRating = 0;
                 fetchCommentsByID(currentShow)
-                .then(commentArray => {
-                commentArray.forEach((comment) => {
-                overallRating += comment.rating;
-                });
-                overallRating = overallRating / commentArray.length;
-                if(document.querySelector("#ratingError") !== null) {
-                    document.querySelector("#ratingError").remove();
-                }
-                renderTopStars(overallRating);
-                comment = json
-                renderComment(comment);
-            });
+                    .then(commentArray => {
+                        commentArray.forEach((comment) => {
+                            overallRating += comment.rating;
+                        });
+                        overallRating = overallRating / commentArray.length;
+                        if (document.querySelector("#ratingError") !== null) {
+                            document.querySelector("#ratingError").remove();
+                        }
+                        renderTopStars(overallRating);
+                        comment = json
+                        renderComment(comment);
+                    });
 
-        document.querySelector("#commentForm").reset();
-        clearStars();
-});
+                document.querySelector("#commentForm").reset();
+                clearStars();
+            });
     })
 }
 
-function likeButtonListener(e, comment){
-    if (e.target.className === "bi bi-hand-thumbs-up"){
+function likeButtonListener(e, comment) {
+    if (e.target.className === "bi bi-hand-thumbs-up") {
         e.target.className = "bi bi-hand-thumbs-up-fill"
-        updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) +1})
-        .then(res => res.json())
-        .then(json => {
-            //console.log(e.target.parentNode.childNodes[0])
-            e.target.parentNode.childNodes[0].textContent = json.likes
-        })
-        if(e.target.parentNode.childNodes[3].className === "bi bi-hand-thumbs-down-fill") {
-            e.target.parentNode.childNodes[3].className = "bi bi-hand-thumbs-down"
-            updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) -1})
-            .then(res => res.json())
-            .then(json => {
-                //console.log(e.target.parentNode.childNodes[0])
-                e.target.parentNode.childNodes[2].textContent = json.dislikes
-            })
-        }
-    }
-    else {
-        e.target.className = "bi bi-hand-thumbs-up"
-        updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
-        .then(res => res.json())
-        .then(json =>{
-            e.target.parentNode.childNodes[0].textContent = json.likes
-        })
-    }
-}
-
-
-function dislikeButtonListener(e, comment){
-    if (e.target.className === "bi bi-hand-thumbs-down"){
-        e.target.className = "bi bi-hand-thumbs-down-fill"
-        updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) + 1 })
-        .then(res => res.json())
-        .then(json => {
-            e.target.parentNode.childNodes[2].textContent = json.dislikes
-        })
-        if(e.target.parentNode.childNodes[1].className === "bi bi-hand-thumbs-up-fill") {
-            e.target.parentNode.childNodes[1].className = "bi bi-hand-thumbs-up"
-            updateLikesAndDislikes(comment.id, {likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) -1})
+        updateLikesAndDislikes(comment.id, { likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) + 1 })
             .then(res => res.json())
             .then(json => {
                 //console.log(e.target.parentNode.childNodes[0])
                 e.target.parentNode.childNodes[0].textContent = json.likes
             })
+        if (e.target.parentNode.childNodes[3].className === "bi bi-hand-thumbs-down-fill") {
+            e.target.parentNode.childNodes[3].className = "bi bi-hand-thumbs-down"
+            updateLikesAndDislikes(comment.id, { dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
+                .then(res => res.json())
+                .then(json => {
+                    //console.log(e.target.parentNode.childNodes[0])
+                    e.target.parentNode.childNodes[2].textContent = json.dislikes
+                })
+        }
+    }
+    else {
+        e.target.className = "bi bi-hand-thumbs-up"
+        updateLikesAndDislikes(comment.id, { likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) - 1 })
+            .then(res => res.json())
+            .then(json => {
+                e.target.parentNode.childNodes[0].textContent = json.likes
+            })
+    }
+}
+
+
+function dislikeButtonListener(e, comment) {
+    if (e.target.className === "bi bi-hand-thumbs-down") {
+        e.target.className = "bi bi-hand-thumbs-down-fill"
+        updateLikesAndDislikes(comment.id, { dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) + 1 })
+            .then(res => res.json())
+            .then(json => {
+                e.target.parentNode.childNodes[2].textContent = json.dislikes
+            })
+        if (e.target.parentNode.childNodes[1].className === "bi bi-hand-thumbs-up-fill") {
+            e.target.parentNode.childNodes[1].className = "bi bi-hand-thumbs-up"
+            updateLikesAndDislikes(comment.id, { likes: Number.parseInt(e.target.parentNode.childNodes[0].textContent, 10) - 1 })
+                .then(res => res.json())
+                .then(json => {
+                    //console.log(e.target.parentNode.childNodes[0])
+                    e.target.parentNode.childNodes[0].textContent = json.likes
+                })
         }
     }
     else {
         e.target.className = "bi bi-hand-thumbs-down"
-        updateLikesAndDislikes(comment.id, {dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
-        .then(res => res.json())
-        .then(json => {
-            e.target.parentNode.childNodes[2].textContent = json.dislikes
-        })
+        updateLikesAndDislikes(comment.id, { dislikes: Number.parseInt(e.target.parentNode.childNodes[2].textContent, 10) - 1 })
+            .then(res => res.json())
+            .then(json => {
+                e.target.parentNode.childNodes[2].textContent = json.dislikes
+            })
     }
 }
 
@@ -839,9 +839,22 @@ function modalDeleteButtonListener(comment, commentCard, myModal) {
         .then(res => res.json())
         .then(json => {
 
-        myModal.hide();
-        document.querySelector("#modalWrapper").remove();
-        commentCard.remove();
+            myModal.hide();
+            document.querySelector("#modalWrapper").remove();
+            commentCard.remove();
+            let overallRating=0;
+
+            fetchCommentsByID(currentShow)
+                .then(commentArray => {
+                    commentArray.forEach((comment) => {
+                        overallRating += comment.rating;
+                    });
+                    overallRating = overallRating / commentArray.length;
+                    if (document.querySelector("#ratingError") !== null) {
+                        document.querySelector("#ratingError").remove();
+                    }
+                    renderTopStars(overallRating);
+                });
         });
 }
 
@@ -919,10 +932,10 @@ function fetchCastingCreditsByPersonID(id) {
 
 function updateLikesAndDislikes(id, obj) {
     return fetch(`http://localhost:3000/Comments/${id}`, {
-            method: "PATCH",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(obj)
-        })
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obj)
+    })
 }
 
 function fetchDeleteCommentByID(id) {
